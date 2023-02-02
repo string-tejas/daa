@@ -76,10 +76,10 @@ int main() {
     for (int i = 0; i <= 100; i++) {
         printf("%3d | %3d  %5.2f  %8.2f  %8.2f  %10.2f  %10.2f  %6.0f  %7.0f  %8.2f  %10.0f\n", i, fn_01(i), fn_02(i), fn_03(i), fn_04(i), fn_05(i), fn_06(i), fn_07(i), fn_08(i), fn_09(i), fn_10(i));
 
-        fprintf(fptr, "%d,%d,%f,%f,%f,%f,%f,%.0f,%f,%f,%.0f", i, fn_01(i), fn_02(i), fn_03(i), fn_04(i), fn_05(i), fn_06(i), fn_07(i), fn_08(i), fn_09(i), fn_10(i));
+        fprintf(fptr, "%d,%d,%f,%f,%f,%f,%f,%.0f,%.0f,%f,%.0f", i, fn_01(i), fn_02(i), fn_03(i), fn_04(i), fn_05(i), fn_06(i), fn_07(i), fn_08(i), fn_09(i), fn_10(i));
 
         if (i <= 20) {
-            fprintf(fptr, ",%e\n", fact(i));
+            fprintf(fptr, ",%0.f\n", fact(i));
         } else {
             fprintf(fptr, ",-\n");
         }
