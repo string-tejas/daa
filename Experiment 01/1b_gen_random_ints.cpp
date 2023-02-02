@@ -6,7 +6,7 @@ int random_int() {
 }
 
 int main() {
-    std::ofstream fout("nums.txt");
+    std::ofstream fout("random_numbers.txt");
 
     for (int i = 1; i <= 100000; i++) {
         fout << random_int() << "\n";

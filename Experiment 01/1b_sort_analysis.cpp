@@ -37,8 +37,8 @@ void selection_sort(int* arr, int size) {
 int main() {
     int* arr_ins = new int[100000];
     int* arr_sel = new int[100000];
-    std::ifstream nums("nums.txt");
-    std::ofstream output("sort_time.csv");
+    std::ifstream nums("random_numbers.txt");
+    std::ofstream output("csv/sort_analysis.csv");
     output << "block_size,insertion,selection\n";
 
     for (int i = 1; i <= 100000; i++) {

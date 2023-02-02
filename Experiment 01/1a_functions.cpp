@@ -68,7 +68,7 @@ double fact(int n) {
 int main() {
     FILE *fptr;
     // fptr = fopen("D://Tejas//College//sem4//daa//data.csv", "w");
-    fptr = fopen("data.csv", "w");
+    fptr = fopen("csv/functions.csv", "w");
 
     fprintf(fptr, "i,n,lg n,lg(lg n),n*lg n,(lg n)^(lg n),sqrt(lg n),2^lg n,(lg n)!,sqrt(2)^lg n,n^3,n!\n");
     printf("\n  i |   n   lg n  lg(lg n)  n*lg n  (lg n)^(lg n)  sqrt(lg n)  2^lg n  (lg n)!  sqrt(2)^lg n   n^3\n\n");
@@ -85,7 +85,7 @@ int main() {
         }
     }
     fclose(fptr);
-    printf("\n\nFactorials: ");
+    printf("\n\nFactorials: \n");
     for (int i = 0; i <= 20; i++) {
         printf("%2d! = %.0f\n", i, fact(i));
     }
