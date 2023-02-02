@@ -81,7 +81,7 @@ int main() {
         if (i <= 20) {
             fprintf(fptr, ",%e\n", fact(i));
         } else {
-            fprintf(fptr, "\n");
+            fprintf(fptr, ",-\n");
         }
     }
     fclose(fptr);
