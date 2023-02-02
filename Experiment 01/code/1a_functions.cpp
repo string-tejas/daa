@@ -68,7 +68,7 @@ double fact(int n) {
 int main() {
     FILE *fptr;
     // fptr = fopen("D://Tejas//College//sem4//daa//data.csv", "w");
-    fptr = fopen("csv/functions.csv", "w");
+    fptr = fopen("../csv/functions.csv", "w");
 
     fprintf(fptr, "i,n,lg n,lg(lg n),n*lg n,(lg n)^(lg n),sqrt(lg n),2^lg n,(lg n)!,sqrt(2)^lg n,n^3,n!\n");
     printf("\n  i |   n   lg n  lg(lg n)  n*lg n  (lg n)^(lg n)  sqrt(lg n)  2^lg n  (lg n)!  sqrt(2)^lg n   n^3\n\n");
