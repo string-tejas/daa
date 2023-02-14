@@ -94,18 +94,16 @@ void quick_sort(int* a, int l, int h) {
 }
 
 int main() {
-    int* arr_mer = new int[100000];
-    int* arr_qui = new int[100000];
+    int arr_mer[100000];
+    int arr_qui[100000];
 
     ifstream nums("random_numbers.txt");
     ofstream output("../csv/sort_analysis.csv");
     output << "block_size,merge,quick\n";
 
     for (int i = 1; i <= 100000; i++) {
-        int val = 0;
-        nums >> val;
-        arr_mer[i] = val;
-        arr_qui[i] = val;
+        nums >> arr_mer[i];
+        arr_qui[i] = arr_mer[i];
     }
 
     for (int i = 1; i <= 1000; i++) {
