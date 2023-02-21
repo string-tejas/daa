@@ -1,5 +1,6 @@
 #include <bits/stdc++.h>
 #include <stdio.h>
+#include <iostream>
 
 #include <chrono>
 #include <fstream>
@@ -113,7 +114,10 @@ int main() {
 
     ifstream nums("random_numbers.txt");
     ofstream output("../csv/sort_analysis.csv");
+    ofstream comparison("../csv/comparison.csv");
+
     output << "block_size,merge,quick\n";
+    comparison << "block_no,merge,quick\n";
 
     for (int i = 1; i <= 100000; i++) {
         nums >> arr_mer[i];
@@ -144,6 +148,8 @@ int main() {
 
         output << i * 100 << "," << merge_time.count() << ","
                << quick_time.count() << "\n";
+
+        comparison << i << "," << merge_comparision << "," << quick_comparision << "\n";
     }
 
     cout << "\nSorting completed !" << endl;
