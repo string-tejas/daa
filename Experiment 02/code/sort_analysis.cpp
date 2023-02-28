@@ -1,9 +1,10 @@
 #include <bits/stdc++.h>
 #include <stdio.h>
-#include <iostream>
 
 #include <chrono>
+#include <ctime>
 #include <fstream>
+#include <iostream>
 using namespace std;
 
 double merge_comparision = 0.0;
@@ -68,7 +69,6 @@ void swap(int& a, int& b) {
 }
 
 int partition(int* a, int l, int h) {
-    // pivot selection: last element
     int pivot = h;
     int low = l;
     int high = h - 1;
@@ -94,6 +94,14 @@ int partition(int* a, int l, int h) {
         swap(a[low], a[pivot]);
 
     return low;
+}
+
+int partition_random(int* a, int l, int h) {
+    srand(time(NULL));
+    int random = l + rand() % (h - l);
+    swap(a[random], a[h]);
+
+    return partition(a, l, h);
 }
 
 void quick_sort(int* a, int l, int h) {
