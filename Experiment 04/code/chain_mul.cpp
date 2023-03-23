@@ -1,17 +1,16 @@
 #include <bits/stdc++.h>
-#define MATRIX_COUNT 10
 using namespace std;
 
 class Matrix {
    public:
-    int** m;
+    float** m;
     int row;
     int col;
 
     Matrix(int r, int c) {
-        m = new int*[r];
+        m = new float*[r];
         for (int i = 0; i < r; i++) {
-            m[i] = new int[c];
+            m[i] = new float[c];
         }
 
         for (int i = 0; i < r; i++) {
@@ -42,7 +41,26 @@ class Matrix {
         }
         cout << endl;
     }
+
+    static long mul_count;
+    static Matrix* multiply(Matrix* a, Matrix* b) {
+        Matrix* c = new Matrix(a->row, b->col);
+
+        for (int i = 0; i < a->row; i++) {
+            for (int j = 0; j < b->col; j++) {
+                int sum = 0;
+                for (int k = 0; k < a->col; k++) {
+                    sum += a->m[i][k] * b->m[k][j];
+                    mul_count++;
+                }
+                c->m[i][j] = sum;
+            }
+        }
+        return c;
+    }
 };
+
+long Matrix::mul_count = 0;
 
 void print_array(int* a, int n) {
     cout << "[ ";
@@ -69,7 +87,7 @@ string optimal_parenthesization(Matrix* s, int i, int j) {
         return "M" + to_string(i);
 
     } else {
-        return "(" + optimal_parenthesization(s, i, s->m[i][j]) + " " +
+        return "(" + optimal_parenthesization(s, i, s->m[i][j]) + "*" +
                optimal_parenthesization(s, s->m[i][j] + 1, j) + ")";
     }
 }
@@ -98,7 +116,81 @@ string matrix_chain(int* p, int n, Matrix* m, Matrix* s) {
     return optimal_parenthesization(s, 1, n);
 }
 
+string to_postfix(string infix) {
+    string postfix = "";
+    vector<char> stack;
+
+    for (int i = 0; i < infix.size(); i++) {
+        char ch = infix[i];
+        if (ch == '(') {
+            stack.push_back(ch);
+        } else if (ch == '*') {
+            stack.push_back('*');
+        } else if (ch == ')') {
+            while (stack[stack.size() - 1] != '(') {
+                postfix = postfix + stack.back();
+                stack.pop_back();
+            }
+            stack.pop_back();
+        } else {
+            if (ch == 'M') {
+                postfix += " ";
+            }
+            postfix = postfix + ch;
+        }
+    }
+
+    while (stack.size() != 0) {
+        char pop = stack.back();
+        postfix = postfix + pop;
+        stack.pop_back();
+    }
+
+    return postfix;
+}
+
+long count_normal = 0;
+
+Matrix* eval_matrix_normal_mul(string postfix, Matrix** m_arr) {
+    vector<Matrix*> eval;
+
+    Matrix::mul_count = 0;
+
+    for (int i = 0; i < postfix.size(); i++) {
+        char ch = postfix[i];
+
+        if (ch == 'M' || ch == ' ') {
+            continue;
+        }
+        if (ch == '*') {
+            Matrix* b = eval.back();
+            eval.pop_back();
+
+            Matrix* a = eval.back();
+            eval.pop_back();
+
+            Matrix* c = Matrix::multiply(a, b);
+
+            eval.push_back(c);
+
+        } else if (ch >= '1' || ch <= '9') {
+            int index = ch - '0';
+            if (ch == '1' && postfix[i + 1] == '0') {
+                index = 10;
+                i++;
+            }
+            eval.push_back(m_arr[index]);
+        }
+    }
+    return eval.back();
+}
+
 int main() {
+    int MATRIX_COUNT = 0;
+
+    cout << "Enter number of matrices (<= 10) : ";
+    cin >> MATRIX_COUNT;
+
     int* p = order_matrices_in_range(MATRIX_COUNT, 15, 46);
 
     cout << "\np[i] = ";
@@ -127,6 +219,16 @@ int main() {
     Matrix::print(s, true);
 
     cout << "Optimal parenthesization : " << optimum_inorder << endl;
+
+    string optimum_postfix = to_postfix(optimum_inorder);
+    cout << "Postfix expression : " << optimum_postfix << endl;
+
+    cout << "\nResult Of Multiplication : " << endl;
+
+    Matrix::print(eval_matrix_normal_mul(optimum_postfix, M));
+
+    cout << "Estimated Multiplication count: " << m->m[1][m->col - 1] << endl;
+    cout << "Actual Multiplication count: " << Matrix::mul_count << endl;
 
     return 0;
 }
