@@ -48,7 +48,7 @@ class Matrix {
 
         for (int i = 0; i < a->row; i++) {
             for (int j = 0; j < b->col; j++) {
-                int sum = 0;
+                float sum = 0;
                 for (int k = 0; k < a->col; k++) {
                     sum += a->m[i][k] * b->m[k][j];
                     mul_count++;
@@ -73,7 +73,7 @@ void print_array(int* a, int n) {
     cout << "]" << endl;
 }
 
-int* order_matrices_in_range(int num, int min, int max) {
+int* gen_matrix_orders_in_range(int num, int min, int max) {
     int* p = new int[num + 1];
     srand(time(0));
     for (int i = 0; i <= num; i++) {
@@ -191,7 +191,7 @@ int main() {
     cout << "Enter number of matrices (<= 10) : ";
     cin >> MATRIX_COUNT;
 
-    int* p = order_matrices_in_range(MATRIX_COUNT, 15, 46);
+    int* p = gen_matrix_orders_in_range(MATRIX_COUNT, 15, 46);
 
     cout << "\np[i] = ";
     print_array(p, MATRIX_COUNT + 1);
