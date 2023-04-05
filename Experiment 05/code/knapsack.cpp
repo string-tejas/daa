@@ -103,7 +103,6 @@ Result *knap_sack_greedy(int W, int n, int weight[], int profit[]) {
             float portion_taken = (float)space_needed / weight[index];
             io[index] = portion_taken;
             total_profit += portion_taken * profit[index];
-            break;
         } else {
             total_profit += profit[index];
         }
