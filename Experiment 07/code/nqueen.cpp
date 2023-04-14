@@ -77,5 +77,9 @@ int main() {
     cin >> n;
     int** chessboard = create_chessboard(n);
     solve_nqueen(chessboard, 0, n);
+    
+    if (sol_count == 0) {
+        cout << "No solution found." << endl;
+    }
     return 0;
 }
