@@ -1,7 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-
 int** create4x4Array() {
     int** arr = new int*[4];
     for (int i = 0; i < 4; i++) {
@@ -10,7 +9,6 @@ int** create4x4Array() {
     return arr;
 }
 
-
 void input4x4Array(int** arr) {
     for (int i = 0; i < 4; i++) {
         for (int j = 0; j < 4; j++) {
@@ -18,7 +16,6 @@ void input4x4Array(int** arr) {
         }
     }
 }
-
 
 void output4x4Array(int** arr) {
     for (int i = 0; i < 4; i++) {
@@ -130,10 +127,10 @@ bool can_move(int** arr, char c) {
         default:
             return false;
     }
+    return true;
 }
 
 void solve15puzzle(int** arr) {
-    
     int move_count = 0;
     int misplaced_count = misplaced(arr);
     int cost = 0;
@@ -142,8 +139,9 @@ void solve15puzzle(int** arr) {
 
     while (misplaced_count != 0) {
         move_count++;
-        int cost_up, cost_down, cost_left, cost_right;
-       
+        int cost_up = INT_MAX, cost_down = INT_MAX, cost_left = INT_MAX,
+            cost_right = INT_MAX;
+
         if (prev_move != 'd' && can_move(arr, 'u')) {
             move(arr, 'u');
             cost_up = misplaced(arr) + move_count;
@@ -168,15 +166,21 @@ void solve15puzzle(int** arr) {
             move(arr, 'l');
         }
 
-        if (cost_up <= cost_down && cost_up <= cost_left && cost_up <= cost_right) {
+        cout << endl
+             << "Costs: " << cost_up << " " << cost_down << " " << cost_left
+             << " " << cost_right << endl;
+
+        if (cost_up < cost_down && cost_up < cost_left &&
+            cost_up < cost_right && can_move(arr, 'u')) {
             move(arr, 'u');
             prev_move = 'u';
             cost = cost_up;
-        } else if (cost_down <= cost_left && cost_down <= cost_right) {
+        } else if (cost_down < cost_left && cost_down < cost_right &&
+                   can_move(arr, 'd')) {
             move(arr, 'd');
             prev_move = 'd';
             cost = cost_down;
-        } else if (cost_left <= cost_right) {
+        } else if (cost_left < cost_right && can_move(arr, 'l')) {
             move(arr, 'l');
             prev_move = 'l';
             cost = cost_left;
@@ -186,8 +190,8 @@ void solve15puzzle(int** arr) {
             cost = cost_right;
         }
 
-        cout << endl <<  move_count  << ") " ;
-        cout << "Move: " << prev_move ;
+        cout << endl << move_count << ") ";
+        cout << "Move: " << prev_move;
         cout << "  Cost: " << cost << endl;
 
         output4x4Array(arr);
@@ -198,7 +202,7 @@ void solve15puzzle(int** arr) {
 
 int main() {
     int** arr = create4x4Array();
-    
+
     cout << "Enter inital state of 15 puzzle: " << endl;
     input4x4Array(arr);
 
@@ -206,7 +210,6 @@ int main() {
     output4x4Array(arr);
 
     solve15puzzle(arr);
-
 
     return 0;
 }

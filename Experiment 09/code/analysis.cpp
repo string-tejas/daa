@@ -94,17 +94,11 @@ void rabin_karp(string str, string substr, int q) {
 }
 
 int main() {
-    string str, substr;
+    string str = "aab", substr = "ab";
     srand(time(0));
-    cout << "Enter a string: ";
-    cin >> str;
+    ofstream fout("../csv/analysis.csv");
 
-    cout << "Enter a substring: ";
-    cin >> substr;
-
-    int prime;
-    cout << "Enter a prime number (0 for random): ";
-    cin >> prime;
+    int prime = 0;
 
     if (prime == 0) {
         prime = gen_random_prime(100000);
@@ -114,19 +108,29 @@ int main() {
         return 0;
     }
 
-    cout << endl << "Applying Naive algorithm" << endl;
+    fout << "Naive,Rabin-Karp" << endl;
 
-    naive_matching(str, substr);
+    for (int i = 0; i < 50; i++) {
+        c_count_naive = 0;
+        c_count_rbkarp = 0;
 
-    cout << endl << "Applying Rabin-Karp algorithm" << endl;
+        cout << endl << "Applying Naive algorithm" << endl;
 
-    rabin_karp(str, substr, prime);
+        naive_matching(str, substr);
 
-    cout << endl
-         << "Number of comparisons in Naive algorithm: " << c_count_naive
-         << endl;
-    cout << "Number of comparisons in Rabin-Karp algorithm: " << c_count_rbkarp
-         << endl;
+        cout << endl << "Applying Rabin-Karp algorithm" << endl;
+
+        rabin_karp(str, substr, prime);
+        cout << endl
+             << "Number of comparisons in Naive algorithm: " << c_count_naive
+             << endl;
+        cout << "Number of comparisons in Rabin-Karp algorithm: "
+             << c_count_rbkarp << endl;
+
+        fout << c_count_naive << "," << c_count_rbkarp << endl;
+
+        str = "aa" + str;
+    }
 
     return 0;
 }
